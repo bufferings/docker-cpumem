@@ -1,4 +1,4 @@
-# docker-cpu-memory
+# docker-cpumem
 
 ```sh
 $ ./check.sh
