@@ -1,5 +1,5 @@
-# use 2.2 because version 3 doesn't support cpus/memories
-version: "2.2"
+# use v2 because v3 stop supporting cpu and memory options.
+version: "2.4"
 
 x-common: &common
   command: sh -c "javac A.java -d /tmp && cd /tmp && java A"
