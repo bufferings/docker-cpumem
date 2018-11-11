@@ -1,0 +1,43 @@
+# use 2.2 because version 3 doesn't support cpus/memories
+version: "2.2"
+
+x-common: &common
+  command: sh -c "javac A.java -d /tmp && cd /tmp && java A"
+  environment:
+    JAVA_TOOL_OPTIONS: ""
+  working_dir: /work
+  volumes:
+    - .:/work
+
+services:
+
+  # jdk8u181
+  jdk8u181-base: &jdk8u181-base
+    image: adoptopenjdk/openjdk8:jdk8u181-b13-alpine
+    <<: *common
+  jdk8u181-limit: &jdk8u181-limit
+    <<: *jdk8u181-base
+    cpus: 2
+    mem_limit: 512m
+  jdk8u181-limit-option:
+    <<: *jdk8u181-limit
+    environment:
+      JAVA_TOOL_OPTIONS: "-XX:+UnlockExperimentalVMOptions -XX:+UseCGroupMemoryLimitForHeap"
+
+  # jdk8u192
+  jdk8u192-base: &jdk8u192-base
+    image: adoptopenjdk/openjdk8:jdk8u192-b12-alpine
+    <<: *common
+  jdk8u192-limit:
+    <<: *jdk8u192-base
+    cpus: 2
+    mem_limit: 512m
+
+  # jdk-11
+  jdk-11-base: &jdk-11-base
+    image: adoptopenjdk/openjdk11:jdk-11.0.1.13-alpine
+    <<: *common
+  jdk-11-limit:
+    <<: *jdk-11-base
+    cpus: 2
+    mem_limit: 512m
